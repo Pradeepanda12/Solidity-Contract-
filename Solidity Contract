@@ -1,0 +1,40 @@
+pragma solidity ^0.8.0;
+
+interface ERC20 {
+
+    function transfer(address recipient, uint256 amount) external returns (bool);
+
+}
+
+contract EtherToTokenSwapper is ERC20Swapper {
+
+    function swapEtherToToken(address token, uint minAmount) public payable override returns (uint) {
+
+        // Create an instance of the ERC20 token contract
+
+        ERC20 erc20Token = ERC20(token);
+
+        
+
+        // Calculate the amount of tokens to transfer based on the exchange rate or any other logic
+
+        uint tokenAmount = msg.value; // For simplicity, assume 1 Ether = 1 token
+
+        
+
+        require(tokenAmount >= minAmount, "Insufficient token amount");
+
+        
+
+        // Transfer tokens to the message sender
+
+        require(erc20Token.transfer(msg.sender, tokenAmount), "Token transfer failed");
+
+        
+
+        return tokenAmount;
+
+    }
+
+}
+
